@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chat Module</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h2 {
+            color: #333;
+            margin: 0 0 15px 0;
+            text-align: center;
+        }
+        #chat-box {
+            height: 350px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #fafafa;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background: #007bff;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        .bot-message {
+            background: #e9ecef;
+            color: #333;
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+            .chat-container {
+                padding: 15px;
+            }
+            #chat-box {
+                height: 300px;
+            }
+            .input-area {
+                flex-direction: column;
+            }
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <h2>Chat Module</h2>
+        <div id="chat-box"></div>
+        <div class="input-area">
+            <input type="text" id="user-message" placeholder="Type your message..." autocomplete="off">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById("user-message");
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatBox = document.getElementById("chat-box");
+
+            const userDiv = document.createElement("div");
+            userDiv.className = "message user-message";
+            userDiv.textContent = message;
+            chatBox.appendChild(userDiv);
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            input.value = "";
+
+            setTimeout(() => {
+                const botDiv = document.createElement("div");
+                botDiv.className = "message bot-message";
+                botDiv.textContent = "This is an echo: " + message;
+                chatBox.appendChild(botDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 800);
+        }
+
+        document.getElementById("user-message").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+
+</body>
+</html>
