@@ -1,0 +1,31 @@
+import React, { useState } from "react";
+import ReactDOM from "react-dom/client";
+
+function VotingApp() {
+  const [votes, setVotes] = useState({ RAMA: 0, KALYANI: 0 });
+
+  const handleVote = (option) => {
+    setVotes((prevVotes) => ({
+      ...prevVotes,
+      [option]: prevVotes[option] + 1,
+    }));
+  };
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "Arial" }}>
+      <h2>Simple Voting App</h2>
+      <div>
+        <button onClick={() => handleVote("RAMA")}>Vote for RAMA</button>
+        <button onClick={() => handleVote("KALYANI")} style={{ marginLeft: "10px" }}>
+          Vote for KALYANI
+        </button>
+      </div>
+      <h3>Results:</h3>
+      <p>RAMA: {votes.RAMA} votes</p>
+      <p>KALYANI: {votes.KALYANI} votes</p>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<VotingApp />);
