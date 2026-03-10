@@ -1,0 +1,105 @@
+import React, { useState } from "react";
+
+function Calculator() {
+  const [input, setInput] = useState("");
+  const [result, setResult] = useState("");
+
+  const handleClick = (value) => {
+    setInput(input + value);
+  };
+
+  const clearInput = () => {
+    setInput("");
+    setResult("");
+  };
+
+  const calculateResult = () => {
+    try {
+      setResult(eval(input).toString());
+    } catch (error) {
+      setResult("Error");
+    }
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2>Simple Calculator</h2>
+
+      <div style={styles.display}>
+        <div>{input || "0"}</div>
+        <div>= {result}</div>
+      </div>
+
+      <div style={styles.buttons}>
+        {["7", "8", "9", "/"].map((item) => (
+          <button key={item} onClick={() => handleClick(item)} style={styles.button}>
+            {item}
+          </button>
+        ))}
+        {["4", "5", "6", "*"].map((item) => (
+          <button key={item} onClick={() => handleClick(item)} style={styles.button}>
+            {item}
+          </button>
+        ))}
+        {["1", "2", "3", "-"].map((item) => (
+          <button key={item} onClick={() => handleClick(item)} style={styles.button}>
+            {item}
+          </button>
+        ))}
+        {["0", ".", "+", "="].map((item) => (
+          <button
+            key={item}
+            onClick={item === "=" ? calculateResult : () => handleClick(item)}
+            style={styles.button}
+          >
+            {item}
+          </button>
+        ))}
+        <button onClick={clearInput} style={{ ...styles.button, gridColumn: "span 4", backgroundColor: "#ff4444", color: "white" }}>
+          C
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    width: "280px",
+    margin: "50px auto",
+    padding: "20px",
+    border: "2px solid #444",
+    borderRadius: "12px",
+    textAlign: "center",
+    backgroundColor: "#f0f2f5",
+    boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+  },
+  display: {
+    marginBottom: "20px",
+    fontSize: "24px",
+    minHeight: "60px",
+    border: "1px solid #aaa",
+    padding: "15px",
+    backgroundColor: "#fff",
+    borderRadius: "8px",
+    textAlign: "right",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+  },
+  buttons: {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, 1fr)",
+    gap: "12px",
+  },
+  button: {
+    padding: "18px",
+    fontSize: "20px",
+    cursor: "pointer",
+    border: "none",
+    borderRadius: "8px",
+    backgroundColor: "#e0e0e0",
+    transition: "background-color 0.1s",
+  },
+};
+
+export default Calculator;
